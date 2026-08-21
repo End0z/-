@@ -1,0 +1,16 @@
+---
+interface Props { title?: string; description?: string }
+const { title = 'Sakura Bloom · 儿童智能手表', description = '春天落在手腕上。为孩子认真设计的儿童智能手表概念。' } = Astro.props;
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { font-family: 'DM Sans', 'Noto Sans SC', system-ui, sans-serif; color: #5B3D46; background: #FFF9FA; }
+html { scroll-behavior: smooth; }
+body { margin: 0; overflow-x: hidden; }
+::selection { background: #F6B7C8; color: #5B3D46; }
+.glass { background: rgba(255,255,255,.62); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(232,137,163,.14); }
+.petal { position: absolute; width: 10px; height: 15px; border-radius: 80% 20% 80% 20%; transform: rotate(24deg); background: rgba(246,183,200,.55); animation: drift linear infinite; }
+@keyframes drift { 0% { transform: translate3d(0,-12vh,0) rotate(20deg); opacity:0; } 12% { opacity:.85; } 80% { opacity:.7; } 100% { transform: translate3d(8vw,112vh,0) rotate(260deg); opacity:0; } }
+.float { animation: float 6s ease-in-out infinite; }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+.reveal { animation: reveal .8s ease both; }
+@keyframes reveal { from { opacity: 0; transform: translateY(18px); } to { opacity:1; transform:translateY(0); } }
+
+.leaf{position:absolute;top:-10vh;width:13px;height:7px;border-radius:90% 10% 90% 10%;background:rgba(127,165,111,.24);transform:rotate(25deg);animation:leaf-fall linear infinite;filter:blur(.1px)}
+@keyframes leaf-fall{0%{transform:translate3d(0,-10vh,0) rotate(20deg);opacity:0}10%{opacity:1}50%{transform:translate3d(40px,55vh,0) rotate(120deg)}100%{transform:translate3d(-30px,115vh,0) rotate(240deg);opacity:0}}
+
+.snow-drift { position: absolute; top: -10%; color: #B9D9EE; font-size: 12px; animation: snowDrift linear infinite; }
+.snowflake { animation: snowGlow 2.8s ease-in-out infinite; }
+@keyframes snowDrift { 0% { transform: translate3d(0,-10vh,0) rotate(0deg); } 50% { transform: translate3d(18px,48vh,0) rotate(90deg); } 100% { transform: translate3d(-8px,110vh,0) rotate(180deg); } }
+@keyframes snowGlow { 0%,100% { opacity: .4; transform: scale(.94) rotate(0deg); } 50% { opacity: 1; transform: scale(1.08) rotate(20deg); } }

@@ -1,0 +1,23 @@
+---
+import { watches } from '../data/watches';
+---
+<section id="colors" class="mx-auto max-w-6xl px-5 py-20 sm:px-8">
+  <div class="mb-10 flex items-end justify-between gap-6">
+    <div>
+      <p class="text-sm font-semibold uppercase tracking-[.22em] text-[#E889A3]">A family of colors</p>
+      <h2 class="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">第一款，先从樱花开始。</h2>
+    </div>
+    <p class="hidden max-w-sm text-right text-sm leading-6 text-[#806A72] sm:block">同一套设计语言，未来会延伸到五种性格完全不同的颜色。</p>
+  </div>
+  <div class="grid gap-3 sm:grid-cols-5">
+    {watches.map((watch) => (
+      <a href={watch.id === 'sakura' ? '#top' : '#'} class="group rounded-3xl border border-black/5 bg-white/70 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+        <div class="mb-4 h-28 rounded-2xl" style={`background:${watch.background}`}>
+          <div class="mx-auto mt-6 h-14 w-24 rounded-[1.25rem] shadow-sm" style={`background:${watch.primary}`}></div>
+        </div>
+        <div class="font-semibold">{watch.nameZh}</div>
+        <div class="mt-1 text-xs text-[#8a737a]">{watch.name}</div>
+      </a>
+    ))}
+  </div>
+</section>
