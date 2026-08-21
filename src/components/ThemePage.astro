@@ -1,0 +1,279 @@
+---
+import type { Theme } from '../data/themes.ts';
+import Header from './Header.astro';
+import ColorSelector from './ColorSelector.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+export interface Props {
+  theme: Theme;
+  mockupComponent: any;
+  features: Array<[string, string]>;
+}
+
+const { theme, mockupComponent: Mockup, features } = Astro.props;
+const { colors, animation } = theme;
+---
+
+<BaseLayout>
+  <div id="top" class="min-h-screen overflow-hidden" style={{ backgroundColor: colors.background, color: colors.text.primary }}>
+    <Header />
+    
+    {/* 主题特定的背景动画 */}
+    <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-0 overflow-hidden">
+      {theme.name === 'sakura' && (
+        <>
+          {[...Array(animation.particle.count)].map((_, i) => (
+            <span
+              class="petal"
+              style={{
+                left: `${8 + i * 10}%`,
+                animationDuration: animation.particle.duration[i],
+                animationDelay: animation.particle.delay[i],
+              }}
+            />
+          ))}
+        </>
+      )}
+      
+      {theme.name === 'matcha' && (
+        <>
+          {[...Array(animation.particle.count)].map((_, i) => (
+            <span
+              class="leaf"
+              style={{
+                left: `${10 + i * 12}%`,
+                animationDuration: animation.particle.duration[i],
+                animationDelay: animation.particle.delay[i],
+              }}
+            />
+          ))}
+        </>
+      )}
+      
+      {theme.name === 'snow' && (
+        <>
+          {[...Array(animation.particle.count)].map((_, i) => (
+            <span
+              class="snow-drift"
+              style={{
+                left: `${5 + i * 8}%`,
+                animationDuration: animation.particle.duration[i],
+                animationDelay: animation.particle.delay[i],
+                opacity: `${0.18 + (i % 4) * 0.08}`,
+              }}
+            >
+              ✦
+            </span>
+          ))}
+        </>
+      )}
+    </div>
+
+    <main class="relative z-10">
+      {/* Hero Section */}
+      <section class="mx-auto grid min-h-screen max-w-6xl items-center gap-12 px-5 pb-16 pt-32 sm:px-8 lg:grid-cols-[1fr_.95fr] lg:pt-24">
+        <div class="reveal max-w-2xl">
+          <div
+            class="mb-5 inline-flex items-center gap-2 rounded-full border bg-white/70 px-3 py-1.5 text-xs font-medium shadow-sm"
+            style={{
+              borderColor: colors.border.light,
+              color: colors.text.label,
+            }}
+          >
+            <span class="h-2 w-2 rounded-full" style={{ backgroundColor: colors.accent }}></span>
+            {theme.emoji} {theme.label} · Concept
+          </div>
+          
+          <h1 class="text-5xl font-semibold leading-[1.02] tracking-[-.04em] sm:text-7xl">
+            {theme.name === 'sakura' && <>春天落在<br /><span style={{ color: colors.accent }}>手腕上。</span></>}
+            {theme.name === 'matcha' && <>把春天戴在<br /><span style={{ color: colors.accent }}>手腕上。</span></>}
+            {theme.name === 'snow' && <>把一场小雪<br /><span style={{ color: colors.accent }}>戴在腕间。</span></>}
+          </h1>
+          
+          <p class="mt-7 max-w-xl text-base leading-8 sm:text-lg" style={{ color: colors.text.secondary }}>
+            {theme.philosophy}
+          </p>
+          
+          <div class="mt-9 flex flex-wrap gap-3">
+            <a
+              href="#design"
+              class="rounded-full px-6 py-3 font-semibold text-white shadow-lg transition hover:-translate-y-0.5"
+              style={{ backgroundColor: colors.text.primary }}
+            >
+              认识 {theme.label}
+            </a>
+            <a
+              href="#features"
+              class="rounded-full border bg-white/70 px-6 py-3 font-semibold transition hover:-translate-y-0.5"
+              style={{
+                borderColor: colors.border.light,
+                color: colors.text.primary,
+              }}
+            >
+              看看细节
+            </a>
+          </div>
+          
+          <div class="mt-10 flex gap-8 text-xs" style={{ color: colors.text.secondary }}>
+            <div>
+              <div class="font-semibold" style={{ color: colors.text.primary }}>
+                {theme.name === 'sakura' && '01'}
+                {theme.name === 'matcha' && '02'}
+                {theme.name === 'snow' && '03'}
+              </div>
+              <div class="mt-1">{theme.description}</div>
+            </div>
+            <div>
+              <div class="font-semibold" style={{ color: colors.text.primary }}>700ms</div>
+              <div class="mt-1">抬腕动画</div>
+            </div>
+            <div>
+              <div class="font-semibold" style={{ color: colors.text.primary }}>3</div>
+              <div class="mt-1">主题配色</div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Watch Mockup Section */}
+        <div class="relative flex min-h-[560px] items-center justify-center">
+          <div
+            class="absolute h-72 w-72 rounded-full blur-3xl sm:h-96 sm:w-96"
+            style={{ backgroundColor: colors.secondary }}
+          ></div>
+          <div class="relative z-10">
+            <Mockup />
+          </div>
+          <div
+            class="absolute bottom-7 right-4 hidden rounded-3xl bg-white/70 p-4 text-xs shadow-xl sm:block"
+            style={{ color: colors.text.secondary }}
+          >
+            <div class="font-semibold" style={{ color: colors.text.primary }}>One tiny detail</div>
+            <div class="mt-1">最后一片{theme.name === 'sakura' ? '花瓣' : theme.name === 'matcha' ? '叶子' : '雪'}停在屏幕角落。</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Design Section */}
+      <section id="design" class="mx-auto grid max-w-6xl gap-12 px-5 py-24 sm:px-8 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-[.22em]" style={{ color: colors.accent }}>Design language</p>
+          <h2 class="mt-4 text-4xl font-semibold tracking-tight sm:text-6xl">可爱，但不幼稚。</h2>
+        </div>
+        
+        <div class="grid gap-6 text-sm leading-7 sm:grid-cols-2" style={{ color: colors.text.secondary }}>
+          {theme.name === 'sakura' && (
+            <>
+              <div class="rounded-3xl border bg-white/70 p-6" style={{ borderColor: colors.border.light }}>
+                <div class="text-lg font-semibold" style={{ color: colors.text.primary }}>花瓣纹理</div>
+                <p class="mt-2">距离一米看，是干净的粉色。靠近时，才能看到纹理里的光影。</p>
+              </div>
+              <div class="rounded-3xl border bg-white/70 p-6" style={{ borderColor: colors.border.light }}>
+                <div class="text-lg font-semibold" style={{ color: colors.text.primary }}>樱花表冠</div>
+                <p class="mt-2">把传统旋钮变成极简的樱花，是儿童设计的温度。</p>
+              </div>
+              <div class="rounded-3xl border bg-white/70 p-6" style={{ borderColor: colors.border.light }}>
+                <div class="text-lg font-semibold" style={{ color: colors.text.primary }}>暖雪白</div>
+                <p class="mt-2">不是用纯白制造冷感，而是让屏幕也能温暖。</p>
+              </div>
+              <div class="rounded-3xl border bg-white/70 p-6" style={{ borderColor: colors.border.light }}>
+                <div class="text-lg font-semibold" style={{ color: colors.text.primary }}>静谧动画</div>
+                <p class="mt-2">动画不抢注意力。花瓣轻落，时间才是主角。</p>
+              </div>
+            </>
+          )}
+          
+          {theme.name === 'matcha' && (
+            <>
+              <div class="rounded-3xl border bg-white/70 p-6" style={{ borderColor: colors.border.light }}>
+                <div class="text-lg font-semibold" style={{ color: colors.text.primary }}>抹茶深意</div>
+                <p class="mt-2">不是荧光绿的喧闹，而是抹茶的柔和与宁静。</p>
+              </div>
+              <div class="rounded-3xl border bg-white/70 p-6" style={{ borderColor: colors.border.light }}>
+                <div class="text-lg font-semibold" style={{ color: colors.text.primary }}>嫩叶呼吸</div>
+                <p class="mt-2">色彩从浓到淡的梯度，像嫩叶在风中呼吸。</p>
+              </div>
+              <div class="rounded-3xl border bg-white/70 p-6" style={{ borderColor: colors.border.light }}>
+                <div class="text-lg font-semibold" style={{ color: colors.text.primary }}>森林宁静</div>
+                <p class="mt-2">把一点点森林里的安静，收进手表里。</p>
+              </div>
+              <div class="rounded-3xl border bg-white/70 p-6" style={{ borderColor: colors.border.light }}>
+                <div class="text-lg font-semibold" style={{ color: colors.text.primary }}>温和动作</div>
+                <p class="mt-2">每个动画都像叶子飘落，温和而自然。</p>
+              </div>
+            </>
+          )}
+          
+          {theme.name === 'snow' && (
+            <>
+              <div class="rounded-3xl border bg-white/70 p-6" style={{ borderColor: colors.border.light }}>
+                <div class="text-lg font-semibold" style={{ color: colors.text.primary }}>雪雾质感</div>
+                <p class="mt-2">不是冰冷的蓝，而是雪雾中的温暖。</p>
+              </div>
+              <div class="rounded-3xl border bg-white/70 p-6" style={{ borderColor: colors.border.light }}>
+                <div class="text-lg font-semibold" style={{ color: colors.text.primary }}>冰晶亮屏</div>
+                <p class="mt-2">抬腕时先点亮一颗冰晶，时间随后浮现。</p>
+              </div>
+              <div class="rounded-3xl border bg-white/70 p-6" style={{ borderColor: colors.border.light }}>
+                <div class="text-lg font-semibold" style={{ color: colors.text.primary }}>六角表冠</div>
+                <p class="mt-2">六边形的雪花造型，是冬天的温柔。</p>
+              </div>
+              <div class="rounded-3xl border bg-white/70 p-6" style={{ borderColor: colors.border.light }}>
+                <div class="text-lg font-semibold" style={{ color: colors.text.primary }}>冬日陪伴</div>
+                <p class="mt-2">在冷风中，手表也能传递温暖。</p>
+              </div>
+            </>
+          )}
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" class="text-white" style={{ backgroundColor: colors.text.primary }}>
+        <div class="mx-auto max-w-6xl px-5 py-24 sm:px-8">
+          <div class="max-w-2xl">
+            <p class="text-sm font-semibold uppercase tracking-[.22em]" style={{ color: colors.primary }}>Designed for real days</p>
+            <h2 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">为真实的每一天设计</h2>
+          </div>
+          <div class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {features.map(([title, body], i) => (
+              <article
+                class="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
+              >
+                <div class="text-xs" style={{ color: colors.primary }}>0{i + 1}</div>
+                <h3 class="mt-7 text-lg font-semibold">{title}</h3>
+                <p class="mt-2 text-sm leading-6 text-white/80">{body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Color Selector */}
+      <ColorSelector />
+
+      {/* Philosophy Section */}
+      <section class="mx-auto max-w-6xl px-5 pb-28 pt-10 text-center sm:px-8">
+        <div
+          class="mx-auto max-w-3xl rounded-[2.5rem] border bg-white/75 px-6 py-14 shadow-xl sm:px-12"
+          style={{
+            borderColor: colors.border.light,
+            boxShadow: `0 20px 25px -5px ${colors.shadow.medium}`,
+          }}
+        >
+          <div
+            class="mx-auto mb-5 h-10 w-10 rounded-[70%_30%_70%_30%] rotate-[24deg]"
+            style={{ backgroundColor: colors.primary }}
+          ></div>
+          <p class="text-sm font-semibold uppercase tracking-[.22em]" style={{ color: colors.accent }}>
+            {theme.label}
+          </p>
+          <h2 class="mt-4 text-3xl font-semibold tracking-tight sm:text-5xl" style={{ color: colors.text.primary }}>
+            儿童产品，也值得被认真设计。
+          </h2>
+          <p class="mx-auto mt-5 max-w-xl text-sm leading-7" style={{ color: colors.text.secondary }}>
+            孩子看到会喜欢，父母看到不会觉得幼稚，戴了一年以后仍然愿意戴上它。
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+</BaseLayout>
